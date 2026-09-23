@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-23T20:11:23.806158+00:00",
+  "updated_at": "2026-09-23T22:56:21.978340+00:00",
   "criteria": {
     "min_price_yen": null,
     "max_price_yen": 40000000,
@@ -80,7 +80,17 @@
     },
     "prefecture": "東京都"
   },
-  "failures": [],
+  "failures": [
+    "SUUMO: name 'CHINESE_WALK' is not defined",
+    "at home: name 'CHINESE_WALK' is not defined",
+    "Yahoo!不動産: name 'CHINESE_WALK' is not defined",
+    "三井のリハウス: name 'CHINESE_WALK' is not defined",
+    "東急リバブル: name 'AREA_LABELED' is not defined",
+    "ノムコム: name 'AREA_LABELED' is not defined",
+    "レンズ R-ENs（練馬区）: name 'CHINESE_WALK' is not defined",
+    "レンズ R-ENs（西東京市）: name 'CHINESE_WALK' is not defined",
+    "レンズ R-ENs（板橋区）: name 'CHINESE_WALK' is not defined"
+  ],
   "items": [
     {
       "id": "ce78b8092fa2374a425ba1a7",
@@ -108,7 +118,7 @@
           "price_yen": 24980000
         }
       ],
-      "current_match": true
+      "current_match": false
     },
     {
       "id": "abd72a615d876087a821b966",
@@ -136,7 +146,7 @@
           "price_yen": 39990000
         }
       ],
-      "current_match": true
+      "current_match": false
     }
   ]
 }
