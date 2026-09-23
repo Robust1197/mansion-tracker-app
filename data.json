@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-23T23:00:48.131295+00:00",
+  "updated_at": "2026-09-23T23:06:56.685758+00:00",
   "criteria": {
     "min_price_yen": null,
     "max_price_yen": 40000000,
@@ -114,7 +114,7 @@
           "price_yen": 39480000
         }
       ],
-      "current_match": true
+      "current_match": false
     }
   ]
 }
