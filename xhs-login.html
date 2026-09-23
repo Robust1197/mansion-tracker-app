@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#111827">
+<title>小红书重新登录 · Mansion Tracker</title>
+<style>
+body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#f5f6f8;color:#111827;margin:0}
+main{max-width:720px;margin:auto;padding:22px 16px 60px}
+.card{background:#fff;border-radius:18px;padding:18px;box-shadow:0 2px 10px #00000010;margin:14px 0}
+h1{font-size:23px;margin:0 0 8px}h2{font-size:17px}
+p,li{line-height:1.7}.muted{color:#6b7280;font-size:13px}
+.btn{display:block;text-decoration:none;text-align:center;background:#111827;color:#fff;border-radius:12px;padding:13px 16px;font-weight:700;margin:14px 0}
+.secondary{background:#eef2f7;color:#111827}
+code{background:#f3f4f6;border-radius:6px;padding:2px 5px}
+</style>
+</head>
+<body><main>
+<h1>小红书重新登录</h1>
+<p class="muted">当 Mansion Tracker 显示“小红书登录失效 / 安全验证”时，用这个助手更新登录态。</p>
+
+<div class="card">
+<h2>最简单的方法（Windows）</h2>
+<ol>
+<li>下载下面的登录助手。</li>
+<li>在下载目录里右键 <code>xhs-login.ps1</code> → <b>使用 PowerShell 运行</b>。</li>
+<li>脚本会弹出一个真实 Chromium 窗口。正常登录小红书，包括扫码、短信或安全验证。</li>
+<li>确认能看到小红书首页后，回到 PowerShell 窗口按 Enter。</li>
+<li>脚本会自动把登录态写入私有 GitHub Secret，并自动触发一次抓取。</li>
+</ol>
+<a class="btn" href="xhs-login.ps1" download>下载小红书登录助手</a>
+<a class="btn secondary" href="./">返回 Mansion Tracker</a>
+</div>
+
+<div class="card">
+<h2>安全说明</h2>
+<p>脚本不会把 Cookie 打印到屏幕，也不会提交到公开仓库。登录态只暂存在你电脑的临时目录，随后直接写入私有仓库的 GitHub Actions Secret <code>XHS_STORAGE_STATE_B64</code>，完成后临时文件会删除。</p>
+<p class="muted">第一次运行可能自动安装 GitHub CLI / Playwright Chromium。以后重新登录通常只需要打开脚本、登录小红书、按 Enter。</p>
+</div>
+</main></body></html>
