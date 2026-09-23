@@ -13,29 +13,45 @@ h1{font-size:23px;margin:0 0 8px}h2{font-size:17px}
 p,li{line-height:1.7}.muted{color:#6b7280;font-size:13px}
 .btn{display:block;text-decoration:none;text-align:center;background:#111827;color:#fff;border-radius:12px;padding:13px 16px;font-weight:700;margin:14px 0}
 .secondary{background:#eef2f7;color:#111827}
+.android{background:#166534}.win{background:#1d4ed8}
 code{background:#f3f4f6;border-radius:6px;padding:2px 5px}
 </style>
 </head>
 <body><main>
 <h1>小红书重新登录</h1>
-<p class="muted">当 Mansion Tracker 显示“小红书登录失效 / 安全验证”时，用这个助手更新登录态。</p>
+<p class="muted">当 Mansion Tracker 显示“小红书登录失效 / 安全验证”时，在手机或 Windows 上更新登录态。</p>
 
 <div class="card">
-<h2>最简单的方法（Windows）</h2>
+<h2>📱 Android 手机登录</h2>
+<p>推荐日常使用这个方法。只需要第一次安装登录助手 APK。</p>
 <ol>
-<li>下载下面的登录助手。</li>
-<li>在下载目录里右键 <code>xhs-login.ps1</code> → <b>使用 PowerShell 运行</b>。</li>
-<li>脚本会弹出一个真实 Chromium 窗口。正常登录小红书，包括扫码、短信或安全验证。</li>
-<li>确认能看到小红书首页后，回到 PowerShell 窗口按 Enter。</li>
-<li>脚本会自动把登录态写入私有 GitHub Secret，并自动触发一次抓取。</li>
+<li>下载并安装“小红书登录助手”。如果 Android 提示未知来源，请只对当前浏览器允许这一次安装。</li>
+<li>打开助手，在里面的真实小红书页面正常登录，包括短信、扫码或安全验证。</li>
+<li>顶部显示“已检测到小红书登录态”后，点 <b>同步登录态</b>。</li>
+<li>助手会复制登录态并自动打开你的私有 GitHub Secret 页面。</li>
+<li><b>Name</b> 填 <code>XHS_COOKIE</code>，<b>Secret</b> 直接粘贴，然后点 <b>Add secret</b>。</li>
+<li>回到登录助手，点“清除剪贴板”。下一次抓取会自动使用新的登录态。</li>
 </ol>
-<a class="btn" href="xhs-login.ps1" download>下载小红书登录助手</a>
-<a class="btn secondary" href="./">返回 Mansion Tracker</a>
+<a class="btn android" href="https://github.com/Robust1197/mansion-tracker-app/releases/download/xhs-login-helper/xhs-login-helper.apk">下载 Android 登录助手 APK</a>
+<p class="muted">APK 源码公开在 mansion-tracker-app 仓库中；它不会把小红书登录态发送到第三方服务器。</p>
+</div>
+
+<div class="card">
+<h2>💻 Windows 登录</h2>
+<ol>
+<li>下载登录助手脚本。</li>
+<li>在下载目录里右键 <code>xhs-login.ps1</code> → <b>使用 PowerShell 运行</b>。</li>
+<li>脚本会弹出真实 Chromium，小红书正常登录。</li>
+<li>确认首页能正常使用后，回到 PowerShell 按 Enter。</li>
+<li>脚本会自动把登录态写入私有 GitHub Secret，并触发一次抓取。</li>
+</ol>
+<a class="btn win" href="xhs-login.ps1" download>下载 Windows 登录助手</a>
 </div>
 
 <div class="card">
 <h2>安全说明</h2>
-<p>脚本不会把 Cookie 打印到屏幕，也不会提交到公开仓库。登录态只暂存在你电脑的临时目录，随后直接写入私有仓库的 GitHub Actions Secret <code>XHS_STORAGE_STATE_B64</code>，完成后临时文件会删除。</p>
-<p class="muted">第一次运行可能自动安装 GitHub CLI / Playwright Chromium。以后重新登录通常只需要打开脚本、登录小红书、按 Enter。</p>
+<p><b>Android：</b>登录态只存在助手 WebView 和手机剪贴板中；你自己把它粘贴到私有 GitHub Secret。完成后建议立刻点“清除剪贴板”。</p>
+<p><b>Windows：</b>登录态只暂存在电脑临时目录，随后直接写入私有 GitHub Secret，临时文件自动删除。</p>
+<a class="btn secondary" href="./">返回 Mansion Tracker</a>
 </div>
 </main></body></html>
