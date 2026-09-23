@@ -15,7 +15,27 @@ function sorted(items){const v=$('#sort').value; return items.sort((a,b)=>{const
 function render(){let items=[...(feed.items||[])]; if(filter==='current')items=items.filter(x=>x.current_match); if(filter==='fav')items=items.filter(x=>favs.has(x.id)); if(filter==='danchi')items=items.filter(x=>(x.listing||{}).category==='danchi'&&x.current_match); if(filter==='down')items=items.filter(x=>{const d=priceDelta(x);return d&&d.delta<0}); items=sorted(items); $('#list').innerHTML=items.map(card).join(''); $('#empty').style.display=items.length?'none':'block'; $('#nCurrent').textContent=(feed.items||[]).filter(x=>x.current_match).length; $('#nFav').textContent=favs.size; $('#nDown').textContent=(feed.items||[]).filter(x=>{const d=priceDelta(x);return d&&d.delta<0}).length; bind();}
 function bind(){ $$('[data-fav]').forEach(b=>b.onclick=()=>{const id=b.dataset.fav; if(favs.has(id))favs.delete(id);else favs.add(id); localStorage.setItem('mansionFavorites',JSON.stringify([...favs])); render();}); $$('[data-history]').forEach(b=>b.onclick=()=>$('#h-'+b.dataset.history).classList.toggle('show')); }
 $$('.chip').forEach(b=>b.onclick=()=>{$$('.chip').forEach(x=>x.classList.remove('active'));b.classList.add('active');filter=b.dataset.filter;render();}); $('#sort').onchange=render;
-async function load(){try{const r=await fetch('data.json?ts='+Date.now(),{cache:'no-store'}); feed=await r.json(); $('#updated').textContent=`最近更新：${fmtDate(feed.updated_at)} · SUUMO / HOME'S / at home / Yahoo! / 三井 / 東急 / ノムコム / レンズ / 小红书`; if(feed.failures?.length){$('#notice').classList.add('show');$('#notice').textContent='部分网站本次读取失败：'+feed.failures.join(' / ');} detectFavoriteChanges(); render();}catch(e){$('#updated').textContent='无法读取最新数据；请检查 GitHub Pages / data.json。';$('#notice').classList.add('show');$('#notice').textContent=String(e);}}
+async function load(){try{
+  const r=await fetch('data.json?ts='+Date.now(),{cache:'no-store'});
+  feed=await r.json();
+  $('#updated').textContent=`最近更新：${fmtDate(feed.updated_at)} · SUUMO / HOME'S / at home / Yahoo! / 三井 / 東急 / ノムコム / レンズ / 小红书`;
+  if(feed.failures?.length){
+    const failures=feed.failures.map(String);
+    const xhsAuth=failures.some(x=>x.includes('小红书')&&/(登录|驗證|验证|XHS_STORAGE|安全验证)/.test(x));
+    $('#notice').classList.add('show');
+    if(xhsAuth){
+      $('#notice').innerHTML='小红书登录已失效或需要安全验证。其他房源源仍会正常更新。 <a href="xhs-login.html" style="font-weight:700;color:inherit">重新登录小红书 →</a>';
+    }else{
+      $('#notice').textContent='部分网站本次读取失败：'+failures.join(' / ');
+    }
+  }
+  detectFavoriteChanges();
+  render();
+}catch(e){
+  $('#updated').textContent='无法读取最新数据；请检查 GitHub Pages / data.json。';
+  $('#notice').classList.add('show');
+  $('#notice').textContent=String(e);
+}}
 function detectFavoriteChanges(){let changed=[]; for(const x of feed.items||[]){if(!favs.has(x.id))continue; const p=(x.listing||{}).price_yen; if(p!=null&&lastPrices[x.id]!=null&&lastPrices[x.id]!==p)changed.push(`${(x.listing||{}).title}: ${fmtPrice(lastPrices[x.id])} → ${fmtPrice(p)}`); if(p!=null)lastPrices[x.id]=p;} localStorage.setItem('mansionLastPrices',JSON.stringify(lastPrices)); if(changed.length){$('#notice').classList.add('show');$('#notice').textContent='你关注的房源价格有变化：'+changed.join('；'); if('Notification'in window&&Notification.permission==='granted') new Notification('关注房源价格变化',{body:changed[0]});}}
 if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js'); if('Notification'in window&&Notification.permission==='default'){document.addEventListener('click',()=>Notification.requestPermission(),{once:true});}
 load();
