@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-23T23:06:56.685758+00:00",
+  "updated_at": "2026-09-23T23:10:52.397537+00:00",
   "criteria": {
     "min_price_yen": null,
     "max_price_yen": 40000000,
@@ -86,7 +86,9 @@
     },
     "prefecture": "東京都"
   },
-  "failures": [],
+  "failures": [
+    "小红书（登录态浏览器）: 小红书登录状态缺失：请从 App 的“小红书重新登录”入口更新登录态"
+  ],
   "items": [
     {
       "id": "a1c889cf71a1576b4e3c229e",
