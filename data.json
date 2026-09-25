@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-24T23:59:37.836461+00:00",
+  "updated_at": "2026-09-25T01:38:37.179127+00:00",
   "criteria": {
     "min_price_yen": null,
     "max_price_yen": 40000000,
@@ -87,7 +87,7 @@
     "prefecture": "東京都"
   },
   "failures": [
-    "小红书（登录态浏览器）: 小红书登录状态缺失：请从 App 的“小红书重新登录”入口更新登录态"
+    "レンズ R-ENs（板橋区）: Client error '404 Not Found' for url 'https://www.r-ens.jp/area_m/areabkn13119/'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404"
   ],
   "items": [
     {
@@ -114,6 +114,34 @@
         {
           "at": "2026-09-23T23:00:42.644710+00:00",
           "price_yen": 39480000
+        }
+      ],
+      "current_match": false
+    },
+    {
+      "id": "edfc6ad4c53363d2343913e0",
+      "first_seen": "2026-09-25T01:29:51.642570+00:00",
+      "last_seen": "2026-09-25T01:33:50.241359+00:00",
+      "active": true,
+      "listing": {
+        "source": "Yahoo!不動産",
+        "title": "アーバンキャッスル秋津 PR",
+        "url": "https://realestate.yahoo.co.jp/used/mansion/detail_corp/b0025424743/",
+        "raw_text": "アーバンキャッスル秋津 PR 価格 2,880万円 交通 西武池袋線 「秋津」駅 徒歩8分 他 所在地 東京都清瀬市梅園3丁目 築年数 2007年12月（築19年） 総戸数 32 建物階 地上6階建 管理費等 12,490円/月 間取り/ 専有面積 2SLDK/65.73m 2 成約でもらえる 人気物件TOP10入り 室内写真あり 水回り写真あり 0078-6014-51386 資料をもらう 無料 不動産会社おすすめポイント 藤和ハウス 清瀬店 ブロンズ推奨店 【現状空室】につきいつでもご案内可能！ 広々とした専用庭付き、ペット飼育可能（使用細則あり）です！ 平日のご見学も承りますのでお気軽にお問い合わせください。",
+        "price_yen": 28800000,
+        "area_m2": 65.73,
+        "walk_minutes": 8,
+        "layout": "2SLDK",
+        "building_age_years": 19,
+        "build_year": 2007,
+        "category": "mansion",
+        "has_elevator": null,
+        "price_per_m2": 438156
+      },
+      "price_history": [
+        {
+          "at": "2026-09-25T01:29:51.642570+00:00",
+          "price_yen": 28800000
         }
       ],
       "current_match": false
