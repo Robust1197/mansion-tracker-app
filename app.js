@@ -1,4 +1,7 @@
-const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const $=s=>document.querySelector(s), $=s=>[...document.querySelectorAll(s)];
+const pageParams=new URLSearchParams(location.search);
+const isNativeApp=pageParams.get('native')==='1';
+const returnedFromXhs=pageParams.get('xhs')==='updated';
 let feed={items:[]}, filter='current';
 const favs=new Set(JSON.parse(localStorage.getItem('mansionFavorites')||'[]'));
 const lastPrices=JSON.parse(localStorage.getItem('mansionLastPrices')||'{}');
@@ -24,18 +27,44 @@ async function load(){try{
     const xhsAuth=failures.some(x=>x.includes('小红书')&&/(登录|驗證|验证|XHS_STORAGE|安全验证)/.test(x));
     $('#notice').classList.add('show');
     if(xhsAuth){
-      $('#notice').innerHTML='小红书登录已失效或需要安全验证。其他房源源仍会正常更新。 <a href="xhs-login.html" style="font-weight:700;color:inherit">重新登录小红书 →</a>';
+      const reloginHref=isNativeApp?'xhsloginhelper://login?return=mansiontracker://home':'xhs-login.html';
+      $('#notice').innerHTML='小红书登录已失效或需要安全验证。其他房源源仍会正常更新。 <a href="'+reloginHref+'" style="font-weight:700;color:inherit">重新登录小红书 →</a>';
     }else{
       $('#notice').textContent='部分网站本次读取失败：'+failures.join(' / ');
     }
   }
   detectFavoriteChanges();
   render();
+  if(returnedFromXhs) waitForXhsRefresh(feed.updated_at);
 }catch(e){
   $('#updated').textContent='无法读取最新数据；请检查 GitHub Pages / data.json。';
   $('#notice').classList.add('show');
   $('#notice').textContent=String(e);
 }}
+async function waitForXhsRefresh(previousUpdated){
+  const notice=$('#notice');
+  notice.classList.add('show');
+  notice.innerHTML='小红书登录态已更新，后台正在重新抓取。这里会自动刷新，不需要手动返回浏览器。';
+  for(let i=0;i<12;i++){
+    await new Promise(r=>setTimeout(r,15000));
+    try{
+      const r=await fetch('data.json?ts='+Date.now(),{cache:'no-store'});
+      const next=await r.json();
+      const failures=(next.failures||[]).map(String);
+      const xhsAuth=failures.some(x=>x.includes('小红书')&&/(登录|驗證|验证|XHS_STORAGE|安全验证)/.test(x));
+      if(next.updated_at!==previousUpdated && !xhsAuth){
+        feed=next;
+        $('#updated').textContent=`最近更新：${fmtDate(feed.updated_at)} · SUUMO / HOME'S / at home / Yahoo! / 三井 / 東急 / ノムコム / レンズ / 小红书`;
+        notice.innerHTML='小红书登录已恢复，最新抓取结果已刷新。';
+        detectFavoriteChanges();
+        render();
+        return;
+      }
+    }catch(e){}
+  }
+  notice.innerHTML='登录态已经上传，但后台抓取还没完成。App 会继续正常使用；稍后重新打开即可看到最新状态。';
+}
+
 function detectFavoriteChanges(){let changed=[]; for(const x of feed.items||[]){if(!favs.has(x.id))continue; const p=(x.listing||{}).price_yen; if(p!=null&&lastPrices[x.id]!=null&&lastPrices[x.id]!==p)changed.push(`${(x.listing||{}).title}: ${fmtPrice(lastPrices[x.id])} → ${fmtPrice(p)}`); if(p!=null)lastPrices[x.id]=p;} localStorage.setItem('mansionLastPrices',JSON.stringify(lastPrices)); if(changed.length){$('#notice').classList.add('show');$('#notice').textContent='你关注的房源价格有变化：'+changed.join('；'); if('Notification'in window&&Notification.permission==='granted') new Notification('关注房源价格变化',{body:changed[0]});}}
 if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js'); if('Notification'in window&&Notification.permission==='default'){document.addEventListener('click',()=>Notification.requestPermission(),{once:true});}
 load();
