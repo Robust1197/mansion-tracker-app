@@ -26,11 +26,12 @@ code{background:#f3f4f6;border-radius:6px;padding:2px 5px}
 <ol>
 <li>下载并安装下面的 APK。</li>
 <li>第一次打开时点 <b>设置 GitHub Token</b>。创建一个 Fine-grained Token，只授权私有仓库 <code>pathToFreedeom</code>。</li>
-<li>Token 权限只需要：<b>Secrets → Read and write</b>、<b>Actions → Read and write</b>。</li>
+<li>Token 权限只需要：<b>Secrets → Read and write</b>、<b>Actions → Read and write</b>。并确认 <b>Repository access → Only select repositories → pathToFreedeom</b>。</li>
 <li>在助手里的真实小红书 WebView 正常登录，包括短信或安全验证。</li>
 <li>显示“已检测到小红书登录态”后，点 <b>登录完成 → 上传登录态</b>。</li>
 <li>助手会在手机上用 GitHub 仓库公钥加密 Cookie，直接更新私有 Secret <code>XHS_COOKIE</code>，并自动触发一次抓取。</li>
 </ol>
+<a class="btn secondary" href="https://github.com/settings/personal-access-tokens/new?name=Mansion+Tracker+XHS+Login&description=Upload+Xiaohongshu+login+state+to+pathToFreedeom&target_name=Robust1197&expires_in=90&secrets=write&actions=write">创建正确权限的 GitHub Token</a>
 <a class="btn android" href="mansiontracker://xhs-login">打开已安装的登录助手</a>
 <a class="btn secondary" href="downloads/xhs-login-helper.apk">下载 Android 登录助手 APK</a>
 <p class="muted">GitHub Token 使用 Android Keystore 加密保存在本机。小红书 Cookie 不会写进公开仓库，也不会经过剪贴板。</p>
