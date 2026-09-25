@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-25T19:30:26.730681+00:00",
+  "updated_at": "2026-09-25T22:45:52.560172+00:00",
   "criteria": {
     "min_price_yen": null,
     "max_price_yen": 40000000,
@@ -87,7 +87,8 @@
     "prefecture": "東京都"
   },
   "failures": [
-    "レンズ R-ENs（板橋区）: Client error '404 Not Found' for url 'https://www.r-ens.jp/area_m/areabkn13119/'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404"
+    "レンズ R-ENs（板橋区）: Client error '404 Not Found' for url 'https://www.r-ens.jp/area_m/areabkn13119/'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+    "小红书（登录态浏览器）: Page.goto: Timeout 60000ms exceeded.\nCall log:\n  - navigating to \"https://www.xiaohongshu.com/search_result?keyword=%E4%B8%9C%E4%BA%AC%E4%B9%B0%E6%88%BF&source=web_search_result_notes\", waiting until \"domcontentloaded\"\n"
   ],
   "items": [
     {
