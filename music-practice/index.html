@@ -234,7 +234,7 @@ $("save-midi").onclick=function(){
  var us=Math.round(60000000/bpm),track=[0,0xFF,0x51,3,(us>>>16)&255,(us>>>8)&255,us&255],prev=0;
  events.forEach(function(e){track.push(...varlen(e.at-prev),...e.msg);prev=e.at});
  track.push(...varlen(Math.max(0,beat-prev)),0xff,0x2f,0);
- var bytes=[...chunk("MThd",[0,0,0,0,0,1,1,224]),...chunk("MTrk",track)];
+ var bytes=[...chunk("MThd",[0,0,0,1,1,224]),...chunk("MTrk",track)];
  download(new Blob([new Uint8Array(bytes)],{type:"audio/midi"}),"口袋作曲.mid");
  $("compose-status").textContent="已生成 MIDI。以后可以在编曲软件里编辑音符与音色。";
 };
