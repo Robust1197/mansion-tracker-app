@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#17243c">
-<meta name="version" content="2026-10-11-v3">
+<meta name="version" content="2026-10-11-v4">
 <title>口袋作曲练习室｜手机听、练、写曲</title>
 <style>
 :root{color-scheme:light;font-family:system-ui,-apple-system,"Noto Sans SC",sans-serif;background:#f3f6fb;color:#20304a}
@@ -28,29 +28,41 @@ select,input{font:inherit}select{border:1px solid #ccd9e9;border-radius:9px;back
 .seq{min-height:70px;border-radius:11px;background:#f0f5fa;padding:9px;display:flex;gap:5px;align-items:center;flex-wrap:wrap}
 .seq button{border:1px solid #a7c5e5;border-radius:8px;background:#fff;color:#285b89;padding:7px 8px;font-size:13px}
 footer{text-align:center;font-size:11px;color:#76869c;padding:8px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.course-day{border:1px solid #dce8f4;border-radius:12px;padding:4px 12px;background:#fbfdff}
+.course-day summary{font-size:14px;font-weight:750;cursor:pointer;padding:12px 0}
+.course-day p{margin:7px 0}
+.course-day .row{margin:10px 0}
 .hr{border:0;border-top:1px solid #e7ecf4;margin:15px 0}
 #update-banner{display:none;background:#fff5d9;color:#755309;padding:10px;margin-bottom:10px;border-radius:12px;font-size:13px}
 @media(min-width:600px){.wrap{padding:21px}.key{min-height:130px}}
 </style>
 </head>
 <body>
-<header><div class="wrap"><h1>🎼 口袋作曲练习室</h1><p>第 1 课 · 先听音乐，再用手机创作 · 在线版 v3</p></div></header>
+<header><div class="wrap"><h1>🎼 口袋作曲练习室</h1><p>7天作曲入门 · 每天30分钟 · 不用下载</p></div></header>
 <main class="wrap">
 <div id="update-banner">有新版本可用。<button class="btn" id="update-now">立即更新</button></div>
 <section>
   <h2>🔊 先测试声音</h2>
   <p>现在是固定网址的网页，不需要下载 HTML。点击按钮后也可以使用下方的原生播放器。</p>
-  <div class="row"><button class="btn primary" id="sound-check">🔊 测试声音</button><button class="btn" id="sound-stop">■ 停止</button><span class="pill" id="version">在线版 v3</span></div>
+  <div class="row"><button class="btn primary" id="sound-check">🔊 测试声音</button><button class="btn" id="sound-stop">■ 停止</button><span class="pill" id="version">课程版 v4</span></div>
   <audio class="player" id="player" controls playsinline preload="none"></audio>
   <div class="status" id="audio-status" aria-live="polite">请点击「测试声音」。若没有声音，请检查媒体音量和蓝牙耳机。</div>
 </section>
 <nav class="tabs" aria-label="课程标签">
-<button class="tab on" data-tab="melody">① 旋律</button>
-<button class="tab" data-tab="interval">② 音程</button>
-<button class="tab" data-tab="chords">③ 和弦</button>
-<button class="tab" data-tab="compose">④ 写曲</button>
+<button class="tab on" data-tab="plan">7天计划</button>
+<button class="tab" data-tab="melody">旋律</button>
+<button class="tab" data-tab="interval">音程</button>
+<button class="tab" data-tab="chords">和弦</button>
+<button class="tab" data-tab="compose">写曲</button>
 </nav>
-<section id="melody" class="panel on">
+<section id="plan" class="panel on">
+<h2>🎯 7 天写出第一首纯音乐</h2>
+<p>每天 30 分钟：听 5 分钟、理解 5 分钟、动手 15 分钟、回听修改 5 分钟。第一周的目标是完成约 30～45 秒的原创旋律小品，并导出 WAV 和 MIDI。</p>
+<div class="row" style="margin:12px 0"><span class="pill" id="course-progress">0 / 7 天完成</span><span class="small">进度保存在当前手机浏览器</span></div>
+<div id="course-lessons" class="stack"></div>
+<div class="status">建议用手指直接在「写曲」里输入音符。不必买钢琴，也不用先背会所有和弦名称。每天完成一小段真实音乐，效果比死记乐理更好。</div>
+</section>
+<section id="melody" class="panel">
 <h2>① 用耳朵认识旋律</h2>
 <p>点击播放，比较旋律向上、向下和起伏时的感觉。</p>
 <div class="stack" id="melody-list"></div>
@@ -100,7 +112,7 @@ footer{text-align:center;font-size:11px;color:#76869c;padding:8px}.grid{display:
 </main>
 <script>
 (function(){"use strict";
-var VERSION="2026-10-11-v3";
+var VERSION="2026-10-11-v4";
 var $=function(id){return document.getElementById(id)};
 var notes={60:"1",62:"2",64:"3",67:"5",69:"6",72:"1̇",74:"2̇",76:"3̇"};
 var scale=[60,62,64,67,69,72,74,76], audioURL=null, lastWav=null;
@@ -171,6 +183,41 @@ document.querySelectorAll(".tab").forEach(function(b){b.addEventListener("click"
  document.querySelectorAll(".tab").forEach(function(x){x.classList.toggle("on",x===b)});
  document.querySelectorAll(".panel").forEach(function(x){x.classList.toggle("on",x.id===b.dataset.tab)});
  })});
+
+var courseDays=[
+ ["五声音阶与旋律走向","听上升、下降、回落三种旋律，认识 1、2、3、5、6。","在写曲页面创作 4 小节（16拍），不要追求复杂。","melody"],
+ ["节奏与留白","理解音符持续 1 拍、2 拍，以及休止符的作用。","在昨天的旋律里加入一个长音和一个休止符，听修改前后的区别。","compose"],
+ ["音程与旋律跳跃","听小三度、大三度、纯五度，做至少 5 道听辨题。","试着让旋律跳跃一次，再用相邻音回落。","interval"],
+ ["和弦与情绪","比较 C、Cm、Cmaj7、Csus2 的色彩，先感受，再记名称。","为你的旋律选出喜欢的和声色彩，并说清它为什么适合。暂时不要求配器。","chords"],
+ ["问句和答句","理解一段旋律如何提出问题，并通过结尾回答。","把 4 小节扩成 8 小节（32拍）：后四小节保留一些重复，并改变结尾。","compose"],
+ ["重复、变奏与留白","找出最有辨识度的 2～4 个音作为动机。","重复这个动机，再用节奏、停顿或不同尾音改出一个变化版。","compose"],
+ ["完成第一首作品","从头听到尾，删去多余音符，调整速度和结尾。","给作品起名，导出 WAV 和 MIDI；做一首约 30～45 秒的短曲。","compose"]
+];
+var courseDone=[];
+try{var c=JSON.parse(localStorage.getItem("pocket-course-seven-v1")||"[]");if(Array.isArray(c))courseDone=c.filter(function(n){return Number.isInteger(n)&&n>=1&&n<=7})}catch(e){}
+function renderCourse(){
+ var box=$("course-lessons");box.textContent="";
+ $("course-progress").textContent=courseDone.length+" / 7 天完成";
+ courseDays.forEach(function(day,i){
+  var id=i+1,detail=node("details","course-day");
+  if(id===1&&!courseDone.length||id===Math.min(7,courseDone.length+1))detail.open=true;
+  detail.appendChild(node("summary","", "第 "+id+" 天 · "+day[0]+(courseDone.includes(id)?" ✓":"")));
+  var p1=node("p","","🎧 听与学："+day[1]),p2=node("p","","✍️ 动手："+day[2]);
+  detail.appendChild(p1);detail.appendChild(p2);
+  var bar=node("div","row");
+  bar.appendChild(btn("▶ 去练习",function(){
+    document.querySelector('[data-tab="'+day[3]+'"]').click();
+    window.scrollTo({top:0,behavior:"smooth"});
+  },"primary"));
+  bar.appendChild(btn(courseDone.includes(id)?"↶ 取消完成":"✓ 标记完成",function(){
+    courseDone=courseDone.includes(id)?courseDone.filter(function(n){return n!==id}):courseDone.concat([id]).sort();
+    try{localStorage.setItem("pocket-course-seven-v1",JSON.stringify(courseDone))}catch(e){}
+    renderCourse();
+  }));
+  detail.appendChild(bar);box.appendChild(detail);
+ });
+}
+renderCourse();
 $("sound-check").onclick=function(){playback([{m:60,start:.03,len:.35,vol:.3},{m:64,start:.44,len:.35,vol:.3},{m:67,start:.84,len:.60,vol:.3}],"soft")};
 $("sound-stop").onclick=function(){stop();state("已停止播放。")};
 melodies.forEach(function(d){
@@ -214,7 +261,7 @@ function showSeq(){
   box.appendChild(b);beat+=n.d;if(n.m!==null)amount++;
   if(Math.abs(beat/4-Math.round(beat/4))<.001)box.appendChild(node("span","small","│"));
  });
- $("seq-count").textContent=amount+" 音符";
+ $("seq-count").textContent=amount+" 音符 · "+beat+" 拍 · "+(beat/4).toFixed(1)+" 小节";
 }
 $("tempo").oninput=function(){$("tempo-label").textContent=$("tempo").value+" BPM"};
 $("rest").onclick=function(){sequence.push({m:null,d:parseFloat($("duration").value)});save();showSeq()};
