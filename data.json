@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-23T01:52:27.216432+00:00",
+  "updated_at": "2026-10-23T07:28:41.759417+00:00",
   "criteria": {
     "min_price_yen": null,
     "max_price_yen": 40000000,
@@ -87,7 +87,6 @@
     "prefecture": "東京都"
   },
   "failures": [
-    "at home: Server error '503 Service Temporarily Unavailable' for url 'https://sorry.athome.co.jp/'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503",
     "レンズ R-ENs（板橋区）: Client error '404 Not Found' for url 'https://www.r-ens.jp/area_m/areabkn13119/'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404"
   ],
   "items": [
