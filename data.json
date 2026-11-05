@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-05T17:59:00.979287+00:00",
+  "updated_at": "2026-11-05T23:34:27.895395+00:00",
   "criteria": {
     "min_price_yen": null,
     "max_price_yen": 40000000,
@@ -87,11 +87,7 @@
     "prefecture": "東京都"
   },
   "failures": [
-    "SUUMO: Server error '503 503' for url 'https://suumo.jp/ms/chuko/tokyo/'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503",
-    "LIFULL HOME'S: Client error '403 Forbidden' for url 'https://www.homes.co.jp/mansion/chuko/tokyo/'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403",
-    "レンズ R-ENs（練馬区）: Client error '403 Forbidden' for url 'https://www.r-ens.jp/area_m/areabkn13120/'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403",
-    "レンズ R-ENs（西東京市）: Client error '403 Forbidden' for url 'https://www.r-ens.jp/area_m/areabkn13229/'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403",
-    "レンズ R-ENs（板橋区）: Client error '403 Forbidden' for url 'https://www.r-ens.jp/area_m/areabkn13119/'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403"
+    "レンズ R-ENs（板橋区）: Client error '404 Not Found' for url 'https://www.r-ens.jp/area_m/areabkn13119/'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404"
   ],
   "items": [
     {
